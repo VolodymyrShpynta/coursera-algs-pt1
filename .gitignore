@@ -2,4 +2,5 @@
 target/
 .idea/
 *tmp/
+*out/
 custom.properties
