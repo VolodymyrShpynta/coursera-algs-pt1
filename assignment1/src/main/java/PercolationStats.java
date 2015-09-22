@@ -2,8 +2,6 @@ import edu.princeton.cs.algs4.StdOut;
 import edu.princeton.cs.algs4.StdRandom;
 import edu.princeton.cs.algs4.StdStats;
 
-import java.util.DoubleSummaryStatistics;
-
 public class PercolationStats {
 
     private final int gridSize;
