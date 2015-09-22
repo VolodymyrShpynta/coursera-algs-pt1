@@ -93,7 +93,7 @@ public class Percolation {
 
     private void validateCoordinates(int i, int j) {
         if (i < 1 || j < 1 || i > gridDimension || j > gridDimension) {
-            throw new IllegalArgumentException();
+            throw new IndexOutOfBoundsException ();
         }
     }
 
