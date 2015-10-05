@@ -10,6 +10,9 @@ public class SortHelper {
         return array;
     }
 
+    public static Comparable[] quickAort(Comparable[] comparables){
+
+    }
 
     private static void merge(Comparable[] a, Comparable[] aux, int lo, int mid, int hi) {
         for (int k = lo; k <= hi; k++)
