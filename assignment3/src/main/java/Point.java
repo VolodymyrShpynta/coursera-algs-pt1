@@ -23,9 +23,15 @@ public final class Point implements Comparable<Point> {
         return "(" + x + ", " + y + ")";
     }
 
-    public int compareTo(Point that) {return 0;}
+    public int compareTo(Point that) {
+        return this.y == that.y ? this.x - that.x : this.y - that.y;
+    }
+
     public double slopeTo(Point that) {
         return (double) (this.y - that.y) / ((double) (this.x - that.x));
     }
 
-    public Comparator<Point> slopeOrder() {return null;}}
+    public Comparator<Point> slopeOrder() {
+        return (o1, o2) -> (o1.y - y) / (o1.x - x) - (o2.y - y) / (o2.x - x);
+    }
+}
