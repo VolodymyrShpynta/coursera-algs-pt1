@@ -10,6 +10,12 @@ public class BruteCollinearPoints {
         if (points == null) {
             throw new NullPointerException();
         }
+        int notEqualsCount = 0;
+        for (int i = 0; i < points.length - 1; i++)
+            if (!points[i].equals(i + 1))
+                notEqualsCount++;
+        if(notEqualsCount == 0)
+            throw new IllegalArgumentException();
 
         for (int i = 0; i < points.length; i++) {
             if (points[i] == null) throw new NullPointerException();
@@ -31,9 +37,6 @@ public class BruteCollinearPoints {
                     }
                 }
             }
-        }
-        if (segments.isEmpty()) {
-            throw new IllegalArgumentException();
         }
     }
 
