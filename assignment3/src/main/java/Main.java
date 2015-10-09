@@ -24,9 +24,10 @@ public class Main {
             p.draw();
         }
         StdDraw.show();
-
+   /*     for (int i = 1; i < points.length; i++)
+            System.out.println(points[0].slopeTo(points[i]));*/
         // print and draw the line segments
-        BruteCollinearPoints collinear = new BruteCollinearPoints(points);
+        FastCollinearPoints collinear = new FastCollinearPoints(points);
         for (LineSegment segment : collinear.segments()) {
             StdOut.println(segment);
             segment.draw();
