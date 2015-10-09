@@ -28,10 +28,22 @@ public final class Point implements Comparable<Point> {
     }
 
     public double slopeTo(Point that) {
-        return (double) (this.y - that.y) / ((double) (this.x - that.x));
+        if (this.x == that.x && this.y != that.y) {
+            return Double.POSITIVE_INFINITY;
+        } else if (this.x == that.x && this.y == that.y) {
+            return Double.NEGATIVE_INFINITY;
+        } else if (that.y - this.y == 0) {
+            return 0.0;
+        }
+        return (double) (that.y - this.y) / ((double) (that.x - this.x));
     }
 
     public Comparator<Point> slopeOrder() {
-        return (o1, o2) -> (o1.y - y) / (o1.x - x) - (o2.y - y) / (o2.x - x);
+        return (o1, o2) -> {
+            double slope1 = Point.this.slopeTo(o1);
+            double slope2 = Point.this.slopeTo(o2);
+
+            return Double.compare(slope1, slope2);
+        };
     }
 }
