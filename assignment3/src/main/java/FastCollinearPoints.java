@@ -8,39 +8,38 @@ public class FastCollinearPoints {
 
     public FastCollinearPoints(Point[] points) {
         if (null == points) throw new NullPointerException();
+        Point[] pointsCopy = new Point[points.length];
+        System.arraycopy(points, 0, pointsCopy, 0, points.length);
+        Arrays.sort(pointsCopy);
+        for (int i = 0; i < pointsCopy.length - 1; i++)
+            if (pointsCopy.length > 1 && pointsCopy[i].compareTo(pointsCopy[i + 1]) == 0)
+                throw new IllegalArgumentException();
 
-        int notEqualsCount = 0;
-        for (int i = 0; i < points.length - 1; i++)
-            if (!points[i].equals(i + 1))
-                notEqualsCount++;
-        if (notEqualsCount == 0)
-            throw new IllegalArgumentException();
-
-        for (int i = 0; i < points.length - 1; i++) {
+        for (int i = 0; i < pointsCopy.length - 1; i++) {
 
 
-            Arrays.sort(points, i + 1, points.length, points[i].slopeOrder());
+            Arrays.sort(pointsCopy, i + 1, pointsCopy.length, pointsCopy[i].slopeOrder());
             int collinearCount = 1;
 
-            Point min = points[i];
-            Point max = points[i];
-            for (int j = i + 1; j < points.length - 1; j++) {
-                if (points[i].compareTo(points[j]) == 0) continue;
-                if (Double.compare(points[i].slopeTo(points[j]), points[i].slopeTo(points[j + 1])) == 0) {
-                    min = min(min, points[j], points[j + 1]);
-                    max = max(max, points[j], points[j + 1]);
+            Point min = pointsCopy[i];
+            Point max = pointsCopy[i];
+            for (int j = i + 1; j < pointsCopy.length - 1; j++) {
+                if (pointsCopy[i].compareTo(pointsCopy[j]) == 0) continue;
+                if (Double.compare(pointsCopy[i].slopeTo(pointsCopy[j]), pointsCopy[i].slopeTo(pointsCopy[j + 1])) == 0) {
+                    min = min(min, pointsCopy[j], pointsCopy[j + 1]);
+                    max = max(max, pointsCopy[j], pointsCopy[j + 1]);
                     collinearCount++;
-                    if (j + 1 == points.length - 1 && collinearCount >= MIN_COLLINEAR_COUNT) {
+                    if (j + 1 == pointsCopy.length - 1 && collinearCount >= MIN_COLLINEAR_COUNT) {
                         segments.add(new LineSegment(min, max));
                     }
                 } else if (collinearCount >= MIN_COLLINEAR_COUNT) {
                     segments.add(new LineSegment(min, max));
-                    min = points[i];
-                    max = points[i];
+                    min = pointsCopy[i];
+                    max = pointsCopy[i];
                     collinearCount = 1;
                 } else {
-                    min = points[i];
-                    max = points[i];
+                    min = pointsCopy[i];
+                    max = pointsCopy[i];
                     collinearCount = 1;
                 }
             }

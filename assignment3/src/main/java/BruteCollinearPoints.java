@@ -1,3 +1,4 @@
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -10,29 +11,29 @@ public class BruteCollinearPoints {
         if (points == null) {
             throw new NullPointerException();
         }
-        int notEqualsCount = 0;
-        for (int i = 0; i < points.length - 1; i++)
-            if (!points[i].equals(i + 1))
-                notEqualsCount++;
-        if(notEqualsCount == 0)
-            throw new IllegalArgumentException();
+        Point[] pointsCopy = new Point[points.length];
+        System.arraycopy(points, 0, pointsCopy, 0, points.length);
+        Arrays.sort(pointsCopy);
+        for (int i = 0; i < pointsCopy.length - 1; i++)
+            if (pointsCopy.length > 1 && pointsCopy[i].compareTo(pointsCopy[i + 1]) == 0)
+                throw new IllegalArgumentException();
 
-        for (int i = 0; i < points.length; i++) {
-            if (points[i] == null) throw new NullPointerException();
-            for (int j = i + 1; j < points.length; j++) {
-                if (points[j] == null) throw new NullPointerException();
-                if (points[i].equals(points[j])) continue;
-                for (int k = j + 1; k < points.length; k++) {
-                    if (points[k] == null) throw new NullPointerException();
-                    if (points[j].equals(points[k])) continue;
-                    for (int l = k + 1; l < points.length; l++) {
-                        if (points[l] == null) throw new NullPointerException();
-                        if (points[k].equals(points[l])) continue;
-                        if (Double.compare(points[i].slopeTo(points[j]), points[i].slopeTo(points[k])) == 0 &&
-                                Double.compare(points[i].slopeTo(points[k]), points[i].slopeTo(points[l])) == 0)
+        for (int i = 0; i < pointsCopy.length; i++) {
+            if (pointsCopy[i] == null) throw new NullPointerException();
+            for (int j = i + 1; j < pointsCopy.length; j++) {
+                if (pointsCopy[j] == null) throw new NullPointerException();
+                if (pointsCopy[i].equals(pointsCopy[j])) continue;
+                for (int k = j + 1; k < pointsCopy.length; k++) {
+                    if (pointsCopy[k] == null) throw new NullPointerException();
+                    if (pointsCopy[j].equals(pointsCopy[k])) continue;
+                    for (int l = k + 1; l < pointsCopy.length; l++) {
+                        if (pointsCopy[l] == null) throw new NullPointerException();
+                        if (pointsCopy[k].equals(pointsCopy[l])) continue;
+                        if (Double.compare(pointsCopy[i].slopeTo(pointsCopy[j]), pointsCopy[i].slopeTo(pointsCopy[k])) == 0 &&
+                                Double.compare(pointsCopy[i].slopeTo(pointsCopy[k]), pointsCopy[i].slopeTo(pointsCopy[l])) == 0)
                             segments.add(new LineSegment(
-                                            min(points[i], points[j], points[k], points[l]),
-                                            max(points[i], points[j], points[k], points[l]))
+                                            min(pointsCopy[i], pointsCopy[j], pointsCopy[k], pointsCopy[l]),
+                                            max(pointsCopy[i], pointsCopy[j], pointsCopy[k], pointsCopy[l]))
                             );
                     }
                 }
