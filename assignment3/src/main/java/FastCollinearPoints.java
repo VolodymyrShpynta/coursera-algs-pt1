@@ -20,13 +20,7 @@ public class FastCollinearPoints {
 
 
             Arrays.sort(points, i + 1, points.length, points[i].slopeOrder());
-//            Arrays.sort(points, points[i].slopeOrder());
             int collinearCount = 1;
-
-      /*      for (int j = i + 1; j < points.length; j++) {
-                System.out.print(points[j] + ": " + points[i].slopeTo(points[j]) + " ");
-            }
-            System.out.println();*/
 
             Point min = points[i];
             Point max = points[i];
